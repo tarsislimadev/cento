@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Cento</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/vendor/materialize.css" type="text/css">
+        <link rel="stylesheet" href="../css/styles.css" type="text/css">
+
+        <script src="../js/vendor/jquery.js"></script>
+        <script src="../js/vendor/knockout.js"></script>
+        <script src="../js/knockout-lib.js"></script>
+        <script src="../js/vendor/materialize.js"></script>
+    </head>
+    <body class="flow-text">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <h1>Cento</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s5 m5 l5">
+                    <div class="percent">
+                        <span data-bind="text: percent"></span>%
+                    </div>
+                </div>
+                <div class="col s2 m2 l2">
+                    <div class="of">
+                        de
+                    </div>
+                </div>
+                <div class="col s5 m5 l5">
+                    <div class="number">
+                        <span data-bind="text: number"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <input type="text" data-bind="value: input, limit: { bind: input }" placeholder="Total">
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function ViewModel() {
+                var self = this;
+
+                self.percent = ko.observable(88);
+                self.number = ko.observable(88);
+                self.total = ko.computed(function () {
+                    var percent = self.percent();
+                    var number = self.number();
+                    return percent * number / 100;
+                });
+
+                self.input = ko.observable();
+
+                self.play = function () {
+                    console.log("play");
+                };
+            }
+
+            jQuery(document).ready(function () {
+                viewModel = new ViewModel();
+                ko.options.useOnlyNativeEvents = true;
+                ko.applyBindings(viewModel);
+                viewModel.play();
+            });
+        </script>
+    </body>
+</html>
+
